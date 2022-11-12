@@ -1,0 +1,52 @@
+---
+- name: Install nginx 
+  hosts: web  
+  tasks:    
+    - name: install nginx 
+      apt: 
+        name: nginx
+        state: latest
+        update_cache: yes
+    - name: start nginx 
+      service:
+        name: nginx 
+        state: started 
+- name: install PHP 7.4 
+  hosts: web  
+  tasks:
+    - name: Installation install software-properties-common
+      apt: name=software-properties-common
+
+    - name: "Repo PHP 7.4"
+      apt_repository:
+        repo="ppa:ondrej/php"
+   
+    - name: "Updating the repo"
+      apt: update_cache=yes
+
+    - name: Installation PHP 7.4
+      apt: name=php7.4 state=present
+
+    - name: install lamp stack
+      apt:
+        pkg:
+          - php7.4-mysql
+          - php7.4-curl
+          - php7.4-json
+          - php7.4-cgi
+          - php7.4-xsl
+          - php7.4-cgi
+          - php7.4-gd
+          - php7.4-mbstring
+          - php7.4-zip
+          - php7.4-xmlrpc
+          - php7.4-soap
+          - php7.4-intl
+          - libapache2-mod-php
+          - php7.4-fpm
+        state: present
+        update_cache: yes 
+    - name: start php-fpm 
+      service: 
+        name: php7.4-fpm 
+        state: "started"
