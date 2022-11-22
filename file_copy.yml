@@ -1,0 +1,8 @@
+---
+- name: Install Apache 2 Web Server  
+  hosts: web  
+  tasks:    
+    - name: install apache2 
+      copy: 
+        src: info.php
+        dest: /var/www/html/info.php
